@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<div class="stats">
+  <div class="card"><div class="num" id="count-patients">{{ counts.patients }}</div>Patients</div>
+  <div class="card"><div class="num" id="count-doctors">{{ counts.doctors }}</div>Doctors</div>
+  <div class="card"><div class="num" id="count-appointments">{{ counts.appointments }}</div>Upcoming appointments</div>
+  <div class="card"><div class="num" id="count-unpaid">{{ counts.unpaid_bills }}</div>Unpaid bills</div>
+</div>
+<div class="card">
+  Typical flow: add a <a href="/patients">patient</a> and a <a href="/doctors">doctor</a>,
+  <a href="/appointments">book an appointment</a>, then <a href="/bills">create and pay the bill</a>.
+  The patient's messages appear under <a href="/notifications">Notifications</a>.
+</div>
+{% endblock %}

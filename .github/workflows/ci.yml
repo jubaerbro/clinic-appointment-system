@@ -1,0 +1,25 @@
+# GitHub Actions: runs every test on every push to main and on every pull request.
+# A pull request shows a green tick only when all tests pass.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest   # GitHub's Linux machine (Google Chrome is pre-installed)
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Unit tests with coverage
+        run: pytest tests --ignore=tests/ui --cov=clinic --cov=app --cov-report=term-missing --cov-fail-under=80
+
