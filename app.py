@@ -1,9 +1,11 @@
 """Clinic Appointment System - start here.
 
 Run the app:   python app.py      then open http://127.0.0.1:5000
+API docs:      http://127.0.0.1:5000/apidocs   (Swagger UI)
 """
 import os
 
+from flasgger import Swagger
 from flask import Flask, jsonify, render_template
 
 from clinic.database import Database
@@ -57,6 +59,11 @@ def create_app(db_path=None):
                 "SELECT COUNT(*) AS n FROM bills WHERE status = 'unpaid'")["n"],
         }
         return render_template("index.html", counts=counts)
+
+    # Swagger / OpenAPI (self-learned tool): serves openapi.yaml as an
+    # interactive documentation page at /apidocs
+    app.config["SWAGGER"] = {"title": "Clinic API", "openapi": "3.0.3", "uiversion": 3}
+    Swagger(app, template_file=os.path.join(BASE_DIR, "openapi.yaml"))
 
     return app
 
