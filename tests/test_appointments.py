@@ -77,6 +77,23 @@ def test_cancel_notifies_patient(setup):
     assert "cancelled" in notifier.notify.call_args.args[1]
 
 
+# --- added after code review (PR feedback) ---
+def test_cannot_cancel_twice(setup):
+    service, _, patient, doctor = setup
+    appt = service.book(patient["id"], doctor["id"], "2026-12-01", "10:00")
+    service.cancel(appt["id"])
+    with pytest.raises(ValidationError, match="already cancelled"):
+        service.cancel(appt["id"])
+
+
+def test_cancelled_slot_can_be_booked_again(setup):
+    service, _, patient, doctor = setup
+    appt = service.book(patient["id"], doctor["id"], "2026-12-01", "10:00")
+    service.cancel(appt["id"])
+    assert service.book(patient["id"], doctor["id"], "2026-12-01", "10:00")["status"] == "booked"
+# --- end of review additions ---
+
+
 # ---- API and pages ----
 def make_patient_and_doctor(client):
     client.post("/api/patients", json={"name": "Rahim", "age": 40})
