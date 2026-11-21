@@ -42,7 +42,7 @@ class SeniorCitizenFee(FeeStrategy):
     name = "senior (30% off)"
 
     def calculate(self, base_fee):
-        return base_fee * 0.70
+        return base_fee * 0.50
 
 
 class ChildFee(FeeStrategy):
