@@ -11,6 +11,7 @@ from clinic.errors import ClinicError
 from clinic import patients
 from clinic import doctors
 from clinic import notifications
+from clinic import appointments
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -22,6 +23,7 @@ MODULES = [
     patients,
     doctors,
     notifications,
+    appointments,
 ]
 
 
