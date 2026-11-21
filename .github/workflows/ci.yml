@@ -23,3 +23,7 @@ jobs:
       - name: Unit tests with coverage
         run: pytest tests --ignore=tests/ui --cov=clinic --cov=app --cov-report=term-missing --cov-fail-under=80
 
+      - name: Selenium UI tests (headless Chrome)
+        env:
+          REQUIRE_BROWSER: "1"
+        run: pytest tests/ui -v
