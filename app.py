@@ -8,6 +8,7 @@ from flask import Flask, jsonify, render_template
 
 from clinic.database import Database
 from clinic.errors import ClinicError
+from clinic import patients
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -16,6 +17,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Order matters: appointments needs patients, doctors and notifications;
 # billing needs appointments.
 MODULES = [
+    patients,
 ]
 
 

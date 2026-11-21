@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Patients{% endblock %}
+{% block content %}
+<h1>Patients</h1>
+<div class="card">
+  <form method="post" class="inline" id="patient-form">
+    <label>Name <input name="name" id="patient-name" required></label>
+    <label>Phone <input name="phone" id="patient-phone"></label>
+    <label>Email <input name="email" id="patient-email" type="email"></label>
+    <label>Age <input name="age" id="patient-age" type="number" min="0" max="120" required></label>
+    <button type="submit" id="add-patient">Add patient</button>
+  </form>
+</div>
+<div class="card">
+  {% if patients %}
+  <table id="patients-table">
+    <tr><th>ID</th><th>Name</th><th>Phone</th><th>Email</th><th>Age</th></tr>
+    {% for p in patients %}
+    <tr><td>{{ p.id }}</td><td>{{ p.name }}</td><td>{{ p.phone }}</td><td>{{ p.email }}</td><td>{{ p.age }}</td></tr>
+    {% endfor %}
+  </table>
+  {% else %}<p class="empty">No patients yet.</p>{% endif %}
+</div>
+{% endblock %}
