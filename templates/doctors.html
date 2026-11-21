@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Doctors{% endblock %}
+{% block content %}
+<h1>Doctors</h1>
+<div class="card">
+  <form method="post" class="inline" id="doctor-form">
+    <label>Name <input name="name" id="doctor-name" required></label>
+    <label>Specialty <input name="specialty" id="doctor-specialty" required></label>
+    <label>Fee (Tk) <input name="fee" id="doctor-fee" type="number" min="1" step="0.01" required></label>
+    <button type="submit" id="add-doctor">Add doctor</button>
+  </form>
+</div>
+<div class="card">
+  {% if doctors %}
+  <table id="doctors-table">
+    <tr><th>ID</th><th>Name</th><th>Specialty</th><th>Fee (Tk)</th></tr>
+    {% for d in doctors %}
+    <tr><td>{{ d.id }}</td><td>{{ d.name }}</td><td>{{ d.specialty }}</td><td>{{ "%.2f"|format(d.fee) }}</td></tr>
+    {% endfor %}
+  </table>
+  {% else %}<p class="empty">No doctors yet.</p>{% endif %}
+</div>
+{% endblock %}
