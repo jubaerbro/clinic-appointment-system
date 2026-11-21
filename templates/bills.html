@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Billing{% endblock %}
+{% block content %}
+<h1>Billing</h1>
+<div class="card">
+  {% if unbilled %}
+  <form method="post" action="/bills" class="inline" id="bill-form">
+    <label>Appointment
+      <select name="appointment_id" id="bill-appointment">
+        {% for a in unbilled %}
+        <option value="{{ a.id }}">#{{ a.id }} · {{ a.date }} {{ a.time }} · {{ a.patient_name }} with {{ a.doctor_name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <button type="submit" id="create-bill">Create bill</button>
+  </form>
+  {% else %}<p class="empty">Every booked appointment already has a bill.</p>{% endif %}
+</div>
+<div class="card">
+  {% if bills %}
+  <table id="bills-table">
+    <tr><th>Bill</th><th>Appointment</th><th>Patient</th><th>Fee type</th><th>Amount (Tk)</th><th>Status</th><th></th></tr>
+    {% for b in bills %}
+    <tr>
+      <td>{{ b.id }}</td><td>{{ b.date }} {{ b.time }} · {{ b.doctor_name }}</td><td>{{ b.patient_name }}</td>
+      <td>{{ b.fee_type }}</td><td>{{ "%.2f"|format(b.amount) }}</td>
+      <td><span class="tag {{ b.status }}" id="bill-status-{{ b.id }}">{{ b.status }}</span>
+        {% if b.transaction_id %}<br><small>{{ b.transaction_id }}</small>{% endif %}</td>
+      <td>{% if b.status == 'unpaid' %}
+        <form method="post" action="/bills/{{ b.id }}/pay"><button id="pay-{{ b.id }}">Pay</button></form>
+      {% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}<p class="empty">No bills yet.</p>{% endif %}
+</div>
+{% endblock %}
