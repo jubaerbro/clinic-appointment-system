@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+<h1>Notifications</h1>
+<div class="card">
+  {% if notifications %}
+  <table id="notifications-table">
+    <tr><th>When</th><th>Patient</th><th>Message</th><th>Email</th></tr>
+    {% for n in notifications %}
+    <tr><td>{{ n.created_at }}</td><td>{{ n.patient_name }}</td><td>{{ n.message }}</td>
+      <td><span class="tag {{ n.email_status }}">{{ n.email_status }}</span></td></tr>
+    {% endfor %}
+  </table>
+  {% else %}<p class="empty">No notifications yet.</p>{% endif %}
+</div>
+{% endblock %}
